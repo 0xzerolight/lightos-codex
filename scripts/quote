@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ "$EUID" -eq 0 ]; then
+	echo "Do not run this command with sudo."
+	exit 1
+fi
+
+quote=$(shuf -n 1 ~/.lightos/quotes.txt)
+echo ""
+echo "Mikami declares:"
+echo -e "$quote"
+echo ""

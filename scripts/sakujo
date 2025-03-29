@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ "$EUID" -eq 0 ]; then
+  echo "Do not run this command with sudo."
+  exit 1
+fi
+
+target="$*"
+
+if [ -z "$target" ]; then
+  echo "No target specified."
+  echo "Usage: sakujo <filename>"
+  exit 1
+fi
+
+if [ "$target" == "Light Yagami" ]; then
+	echo "God shall not be deleted."
+	exit 1
+fi
+
+echo ""
+echo "Order received..."
+sleep 0.6
+echo "Target identified: '$target'"
+sleep 0.5
+echo "SAKUJO!"
+sleep 0.3
+echo ""
+echo "'$target' has been purged from existence."
+echo ""

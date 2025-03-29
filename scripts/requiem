@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ "$EUID" -eq 0 ]; then
+  echo "Do not run this command with sudo."
+  exit 1
+fi
+
+case "$1" in
+  shutdown)
+    echo "Shutting down the system..."
+    sudo shutdown now
+    ;;
+  sleep)
+    echo "Putting system on standby..."
+    systemctl suspend
+    ;;
+  reboot)
+    echo "Rebooting the system..."
+    sudo reboot
+    ;;
+  *)
+    echo "Usage: requiem <shutdown|sleep|reboot>"
+    exit 1
+    ;;
+esac
+

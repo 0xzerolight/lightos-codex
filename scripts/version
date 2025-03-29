@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Prevent sudo execution
+if [ "$EUID" -eq 0 ]; then
+  echo "Do not run this command with sudo."
+  exit 1
+fi
+
+version_file="$HOME/.lightos/version.txt"
+
+if [ -f "$version_file" ]; then
+    version=$(head -n 1 "$version_file")
+    codename=$(tail -n 1 "$version_file")
+    echo "Light OS: $version"
+    echo "Codename: $codename"
+else
+    echo "Version file not found at $version_file"
+    exit 1
+fi

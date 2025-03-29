@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "$EUID" -eq 0 ]; then
+	echo "Do not run this command with sudo"
+	exit 1
+fi
+
+/usr/bin/clear
+sleep 1
+echo "Operation Drift engaged."
+sleep 1
+echo "Light OS on lockdown."
+echo ""
+echo "$(shuf -n 1 /home/light/.lightos/quotes.txt)"
+sleep 0
+echo ""
+echo "Operation Drift disengaged"

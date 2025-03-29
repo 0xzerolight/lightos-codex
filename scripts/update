@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Prevent sudo execution
+if [ "$EUID" -eq 0 ]; then
+  echo "Do not run this command with sudo."
+  exit 1
+fi
+
+repo_dir="$HOME/lightos-codex"
+version_file="$HOME/.lightos/version.txt"
+changelog_file="$HOME/.lightos/changelog.txt"
+
+echo "Pulling Light OS updates..."
+cd "$repo_dir" || { echo "Repo not found at $repo_dir"; exit 1; }
+git pull
+
+old_version=$(head -n 1 "$version_file")
+old_codename=$(tail -n 1 "$version_file")
+
+cp -r "$repo_dir/scripts/"* ~/.local/bin/
+
+new_version=$(head -n 1 "$repo_dir/version.txt")
+new_codename=$(tail -n 1 "$repo_dir/version.txt")
+
+echo "$new_version" > "$version_file"
+echo "$new_codename" >> "$version_file"
+
+echo "$(date): $old_version ($old_codename) → $new_version ($new_codename)" >> "$changelog_file"
+
+echo ""
+echo "Update complete."
+echo "Version upgraded: $old_version → $new_version"
+echo "Codename: $old_codename → $new_codename"
